@@ -1,15 +1,14 @@
 {
-  "index": "Introduction",
-  "another": "Another Page",
-  "advanced": "Advanced (A Folder)",
+  "index": "Intro",
+  "problem-solving": "Problem Solving",
   "about": {
     "title": "About",
     "type": "page"
   },
   "contact": {
-    "title": "Contact ↗",
+    "title": "Blog ↗",
     "type": "page",
-    "href": "https://twitter.com/shuding_",
+    "href": "https://cheshier.studio/",
     "newWindow": true
   }
 }
