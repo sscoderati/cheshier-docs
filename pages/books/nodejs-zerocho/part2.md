@@ -1,4 +1,4 @@
-## Node.js 교과서 by ZeroCho 섹션 3 요약
+## Node.js 교과서 by ZeroCho 섹션 2 요약
 
 ### 3.1 REPL 사용하기
 
