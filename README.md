@@ -1,4 +1,4 @@
-# Cheshier's Docs
+# Chang Gi's Docs
 
 공부한 것을 정리하는 블로그
 [](https://cheshier-docs.vercel.app/)

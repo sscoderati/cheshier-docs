@@ -1,4 +1,4 @@
-# Cheshier's Docs
+# Chang Gi's Docs
 
 공부하며 기록한 것을 정리한 저장소
 

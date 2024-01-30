@@ -2,7 +2,7 @@ import React from "react";
 import { DocsThemeConfig } from "nextra-theme-docs";
 
 const config: DocsThemeConfig = {
-  logo: <span>Cheshier's Docs</span>,
+  logo: <span>Chang Gi's Docs</span>,
   project: {
     link: "https://github.com/sscoderati",
   },
@@ -11,7 +11,7 @@ const config: DocsThemeConfig = {
       <span>
         {new Date().getFullYear()} ©{" "}
         <a href="https://github.com/sscoderati" target="_blank">
-          Changgi Hong
+          Chang Gi Hong
         </a>
         .
       </span>
@@ -28,7 +28,7 @@ const config: DocsThemeConfig = {
     light: 250,
   },
   useNextSeoProps() {
-    titleTemplate: "%s - Cheshier's Docs";
+    titleTemplate: "%s - Chang Gi's Docs";
   },
 };
 
