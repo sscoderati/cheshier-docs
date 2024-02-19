@@ -231,7 +231,7 @@ nodejs> db.users.find({ age: { $gt: 27 }, married: true }, { _id: 0, name: 1, ag
 - $ne
 - $or
 - $in
-$or 연산자는 두 조건을 요소로 가진 배열을 값으로 갖고있는 식으로 사용할 수 있다.
+  $or 연산자는 두 조건을 요소로 가진 배열을 값으로 갖고있는 식으로 사용할 수 있다.
   나이가 27보다 적거나 결혼한 사용자를 검색한다고 했을 때, 아래와 같이 작성할 수 있다.
 
 ```js
@@ -317,3 +317,69 @@ MySQL의 진영의 시퀄라이즈에 해당하는 것이 몽구스(Mongoose)이
 
 몽구스를 사용하면 컬렉션을 테이블처럼 쓸 수 있도록 스키마(Schema)를 정의할 수 있고, JOIN 연산처럼 사용할 수 있는 populate라는 기능도 지원해준다.
 뿐만 아니라 쿼리를 쉽게 완성할 수 있는 쿼리 빌더, 각종 몽고디비에 데이터를 할당하기 전에 일차적인 필터링 기능도 수행한다.
+
+### 8.7 몽구스 스키마 사용하기
+
+몽고디비에서는 NoSQL의 특성상 필드가 정의되어 있지 않아도 데이터를 추가할 수 있지만, 몽구스를 사용한다면 스키마를 사용해서 필드를 정의해야한다. 아래는 User 스키마의 예시이다.
+
+```js
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
+const userSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  age: {
+    type: Number,
+    required: true,
+  },
+  married: {
+    type: Boolean,
+    required: true,
+  },
+  comment: String, // required: false 생략
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+module.exports = mongoose.model('User', userSchema);
+```
+
+Sequelize와 비슷하게 `_id`의 경우는 자동으로 ObjectId를 넣어준다.
+
+그리고 몽구스에서 조인은 아니지만 조인과 비슷하게 사용할 수 있는 기능으로, `ref`가 있다.
+
+```js
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
+const { Types: { ObjectId } } = Schema;
+const commentSchema = new Schema({
+  commenter: {
+    type: ObjectId,
+    required: true,
+    ref: 'User',
+  },
+  comment: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+module.exports = mongoose.model('Comment', commentSchema);
+```
+
+commenter 필드를 보면 User 스키마를 '참조'하고 있는데, 이게 SQL의 조인과 비슷하게 작동한다.
+
+이 기능을 'populate'라고 하며, 해당 필드의 데이터는 ObjectId에 해당하는 실제 객체로 치환된다. 단, 자바스크립트로 실행되기 때문에 속도가 느리며, 다른 스키마를 참조해서 관계를 맺는다는 것 자체가 몽고디비의 본 사용 철학과는 약간 다른 점이 있어서 이 기능을 사용하는 것에 이견이 분분하다고 한다.
+
+그렇지만 실제 대용량 데이터를 다룬다고 해도 정형 데이터로서 다뤄지는 빈도가 더 높고, 스키마 간 관계를 설정해서 관리하는게 더 편리하다고 느껴서 이 방법이 더 대세가 되지 않을까 생각한다.
